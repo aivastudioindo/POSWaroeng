@@ -21,7 +21,8 @@ Put as much logic as possible in unit tests (`test/unit/`) that run on the Linux
 Feature-first (`lib/features/<fitur>/{data,domain,presentation}`) + shared `lib/core/`.
 State: Riverpod. Nav: GoRouter (`lib/core/router.dart`). Design contract lives at
 `docs/ui-ux-spec.md`; technical plan (DB DDL, CI) at `docs/arsitektur-teknis.md`;
-market research reference at `docs/riset-pasar.md`.
+product requirements, feature status & roadmap at `docs/prd.md`; market research
+reference at `docs/riset-pasar.md`.
 
 Key invariants:
 - Money is `int` rupiah (no cents). Stock stored only in base unit (PCS) in

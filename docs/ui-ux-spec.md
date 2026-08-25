@@ -114,5 +114,4 @@ Barang masuk: pilih satuan beli (DUS/BOX/PCS) → **pratinjau konversi ditampilk
 - Satu `AppTheme` (light+dark) dari `ColorScheme.fromSeed(seedColor: Color(0xFF2563EB))`; token kustom (gradien, warna positif, radius, bayangan) sebagai `ThemeExtension`.
 - `TextTheme` memakai `GoogleFonts.plusJakartaSansTextTheme`.
 - Widget dashboard, kartu, chip satuan, keypad dibuat sebagai komponen reusable di `core/widgets/` — jangan copy-paste gaya per layar.
-- Ikuti skill `flutter-ui` (Riverpod, GoRouter, performa const-first) + `flutter-design` (disiplin tema M3) yang akan dipasang ke repo.
 - Semua warna/ukuran ambil dari tema; nol warna hardcode di widget.

@@ -9,7 +9,7 @@ Beli per dus, jual eceran per pcs, tanpa hitung ulang manual. Data tersimpan lok
 Sudah jadi:
 - **Kasir tunai end-to-end** — cari/scan produk, keranjang, pecahan bayar cepat, kembalian otomatis
 - **Beranda** — pendapatan & profit hari ini, indikator stok menipis, 6 menu utama
-- **Manajemen produk** — CRUD + kategori + harga beli/jual (rupiah bulat)
+- **Manajemen produk** — CRUD dasar: nama, kode, harga jual, stok minimum + soft delete (kategori/barcode/harga beli menyusul bersama multi-satuan)
 - **Struk thermal Bluetooth** 58/80mm (fallback pratinjau di layar)
 - **Pengaturan toko & printer**
 
@@ -22,15 +22,9 @@ Menyusul:
 
 ## Status & Roadmap
 
-| Fase | Isi | Status |
-|---|---|---|
-| 0 | Fondasi: Flutter + skema DB v1 + CI | ✅ selesai |
-| 1 | Kasir MVP end-to-end + struk BT + pengaturan | ✅ selesai |
-| 2 | Multi-satuan penuh + stok + scan barcode | 🔜 rencana |
-| 3 | Barang masuk + hutang supplier | 🔜 rencana |
-| 4 | Pengeluaran + laporan | 🔜 rencana |
-| 5 | Struk lanjut + backup/restore + polish | 🔜 rencana |
-| 6 | Signed release APK | 🔜 rencana |
+Fase 0 (fondasi + CI) dan Fase 1 (kasir MVP end-to-end) sudah selesai dan merge ke `main`.
+Berikutnya **Fase 2 — multi-satuan penuh + stok**. Tabel roadmap lengkap per fase ada di
+[PRD §5](docs/prd.md); status terkini selalu di sana (rumah kanonik).
 
 ## Build & Rilis (CI-only)
 
