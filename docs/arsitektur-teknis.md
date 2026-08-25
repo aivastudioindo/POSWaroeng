@@ -1,4 +1,5 @@
 > Snapshot per 2026-08-25. Repo ini adalah sumber kebenaran; dokumen ini disalin utuh dari rencana teknis final tanpa mengubah substansi kontrak.
+> Catatan: ini dokumen RENCANA. Untuk detail implementasi aktual, yang menang adalah kode: workflow di `.github/workflows/ci.yml`, DDL di `lib/core/db/schema.dart` (mis. sketch §3.2 memakai `--fatal-infos`/`--coverage`, workflow aktual menjalankan `flutter analyze` + `flutter test` polos; folder fitur belum semua ada — hanya yang sudah dibangun per roadmap §6).
 
 # Rencana Arsitektur Teknis POSWaroeng
 
@@ -18,7 +19,7 @@ POSWaroeng dirancang sebagai aplikasi Flutter **offline-first murni** dengan pen
 
 Keputusan skema hemat untuk sync masa depan (1 paragraf, lihat bagian 2) sudah dimasukkan tanpa merancang backend.
 
-**Status verifikasi:** versi package di bawah **terverifikasi** dari pub.dev per **2026-08-25** (akses via webfetch). Hal yang belum bisa saya jalankan (build/test aktual) ditandai sebagai **asumsi** — worktree ini hanya berisi README placeholder, tidak ada proyek Flutter, dan Termux tidak punya toolchain build.
+**Status verifikasi:** versi package di bawah **terverifikasi** dari pub.dev per **2026-08-25** (akses via webfetch). Hal yang belum bisa saya jalankan (build/test aktual) ditandai sebagai **asumsi** — saat dokumen ini disusun, repo belum berisi proyek Flutter dan Termux tidak punya toolchain build. *(Update: Fase 0+1 kini terimplementasi dan merge — lihat roadmap §6 dan kode aktual.)*
 
 ---
 
@@ -677,6 +678,6 @@ Semua URL diakses **2026-08-25** via webfetch.
 - `minSdk 21` cukup untuk semua plugin; kemungkinan perlu naik ke **23** demi `mobile_scanner`/CameraX terbaru — verifikasi saat integrasi.
 - Lebar kolom struk (58mm≈32, 80mm≈48 kolom, font A) — angka umum ESC/POS; kalibrasi per model printer di device.
 - Perilaku signing fallback Gradle (debug bila `key.properties` tak ada) — pola standar; uji saat menambah signing.
-- Angka build time / efektivitas cache — belum diukur (tak ada CI run pada worktree ini; repo hanya README placeholder).
+- Angka build time / efektivitas cache — lihat riwayat run CI aktual di GitHub Actions untuk angka terkini.
 
-**Catatan lingkungan:** worktree hanya berisi `README.md` placeholder + `.opencode/`; belum ada proyek Flutter. Rekomendasi di atas adalah rancangan untuk diimplementasikan, bukan hasil eksekusi build/test aktual.
+**Catatan lingkungan (saat penyusunan rencana):** saat rencana ini dibuat, repo hanya berisi `README.md` placeholder; belum ada proyek Flutter. Rekomendasi di atas adalah rancangan yang kini **sebagian besar sudah diimplementasikan** (Fase 0+1 merge; lihat kode aktual dan roadmap §6) — bagian Fase 2+ masih berupa rencana.

@@ -60,12 +60,15 @@ Desain layar merujuk [ui-ux-spec.md](ui-ux-spec.md); logika data merujuk [arsite
   - Grid 6 menu utama (Produk, Stok, Barang Masuk, Pengeluaran, Laporan, Riwayat) sesuai kontrak UI/UX; tiap kotak membuka modulnya atau placeholder "segera hadir" yang jelas.
   - Tombol TRANSAKSI selalu terlihat dan membuka kasir dalam ≤ 1 ketukan.
 
-### 4.2 Produk — SELESAI (Fase 1, dasar PCS)
+### 4.2 Produk — SELESAI SEBAGIAN (Fase 1: CRUD dasar PCS; sisanya Fase 2)
 - **Cerita:** Sebagai pemilik warung, saya ingin mencatat produk beserta kode/barcode, kategori, harga beli, harga jual, dan stok minimum, sehingga katalog saya rapi dan bisa dicari cepat saat jualan.
-- **Kriteria terima:**
-  - CRUD produk lengkap: nama, kode/SKU, barcode, kategori, harga beli/jual (int rupiah), stok minimum.
-  - Pencarian produk di kasir memakai prefix-match (`LIKE 'kata%'`) dengan hasil instan pada katalog ribuan item.
+- **Kriteria terima (tercapai F1):**
+  - CRUD produk dasar via form: nama, kode/SKU, harga jual (int rupiah), stok awal + stok minimum.
   - Soft delete: produk yang dihapus tidak muncul di katalog tetapi riwayat transaksi lamanya tetap valid.
+  - Model & skema DB sudah menyediakan kolom barcode/kategori/harga beli; UI form menyusul di Fase 2 bersama multi-satuan.
+- **Kriteria terima (Fase 2):**
+  - Form lengkap: barcode, kategori, harga beli.
+  - Pencarian produk di kasir memakai prefix-match (`LIKE 'kata%'`) dengan hasil instan pada katalog ribuan item.
 
 ### 4.3 Satuan (multi-satuan bertingkat) — RENCANA (Fase 2, pembeda #1)
 - **Cerita:** Sebagai pemilik warung, saya ingin mendefinisikan satuan DUS/BOX/PCS per produk dengan faktor konversi, barcode berbeda, dan harga per satuan, sehingga saya bisa beli per dus dan jual eceran tanpa hitung ulang manual.
