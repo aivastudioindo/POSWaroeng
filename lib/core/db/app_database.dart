@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_initializing_formals
+
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 
@@ -17,6 +19,7 @@ class AppDatabase {
 
   final DatabaseFactory? _factory;
   final String? _overridePath;
+
   Database? _db;
 
   /// Instance database yang sudah terbuka. Panggil [open] lebih dulu.

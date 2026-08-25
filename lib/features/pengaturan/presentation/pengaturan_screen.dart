@@ -84,14 +84,17 @@ class _PengaturanScreenState extends ConsumerState<PengaturanScreen> {
   Future<void> _save() async {
     setState(() => _saving = true);
     final repo = ref.read(settingsRepositoryProvider);
-    await repo.setAll({
+    final values = <String, String>{
       SettingKeys.storeName: _nameCtrl.text.trim(),
       SettingKeys.storeAddress: _addressCtrl.text.trim(),
       SettingKeys.storePhone: _phoneCtrl.text.trim(),
       SettingKeys.paperSize: _paperSize,
-      if (_printerMac != null) SettingKeys.printerMac: _printerMac!,
-      if (_printerName != null) SettingKeys.printerName: _printerName!,
-    });
+    };
+    final mac = _printerMac;
+    final printerName = _printerName;
+    if (mac != null) values[SettingKeys.printerMac] = mac;
+    if (printerName != null) values[SettingKeys.printerName] = printerName;
+    await repo.setAll(values);
     ref.invalidate(settingsProvider);
     if (mounted) {
       setState(() => _saving = false);
