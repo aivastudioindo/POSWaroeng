@@ -1,0 +1,125 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+    tags:     [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  FLUTTER_CHANNEL: stable
+
+jobs:
+  # ---------- GATE: analyze + test ----------
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: ${{ env.FLUTTER_CHANNEL }}
+          flutter-version-file: pubspec.yaml
+          cache: true
+
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
+
+  # ---------- BUILD debug APK ----------
+  build-debug:
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: ${{ env.FLUTTER_CHANNEL }}
+          flutter-version-file: pubspec.yaml
+          cache: true
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: gradle-${{ runner.os }}-
+
+      - run: flutter pub get
+      - run: flutter build apk --debug
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: poswaroeng-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 14
+
+  # ---------- RELEASE otomatis saat push tag v* ----------
+  release:
+    needs: verify
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: ${{ env.FLUTTER_CHANNEL }}
+          flutter-version-file: pubspec.yaml
+          cache: true
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: gradle-${{ runner.os }}-
+
+      - run: flutter pub get
+
+      # ---- BUILD PERTAMA: debug APK (signed release menyusul) ----
+      - run: flutter build apk --debug
+      - run: cp build/app/outputs/flutter-apk/app-debug.apk poswaroeng-${{ github.ref_name }}-debug.apk
+
+      # ---- SLOT SIGNING (aktifkan nanti tanpa restrukturisasi) ----
+      # Saat keystore + secrets siap, aktifkan langkah di bawah dan
+      # ganti unggahan di step release dengan APK release yang signed:
+      # - name: Decode keystore
+      #   run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/upload-keystore.jks
+      # - name: Write key.properties
+      #   run: |
+      #     cat > android/key.properties <<EOF
+      #     storeFile=upload-keystore.jks
+      #     storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+      #     keyAlias=${{ secrets.KEY_ALIAS }}
+      #     keyPassword=${{ secrets.KEY_PASSWORD }}
+      #     EOF
+      # - run: flutter build apk --release
+      # - run: cp build/app/outputs/flutter-apk/app-release.apk poswaroeng-${{ github.ref_name }}-release.apk
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: poswaroeng-${{ github.ref_name }}-debug.apk
+          generate_release_notes: true
