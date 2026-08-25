@@ -43,7 +43,7 @@ void main() {
     // Jual 1 DUS (144 PCS) + 5 PCS => stok berkurang 149.
     final cart = const Cart()
         .addItem(
-          SaleItem(
+          const SaleItem(
             productId: 1,
             productName: 'Mie Goreng',
             unitName: 'DUS',
@@ -53,7 +53,7 @@ void main() {
           ),
         )
         .addItem(
-          SaleItem(
+          const SaleItem(
             productId: 1,
             productName: 'Mie Goreng',
             unitName: 'PCS',

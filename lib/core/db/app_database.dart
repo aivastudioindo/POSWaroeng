@@ -17,7 +17,6 @@ class AppDatabase {
 
   final DatabaseFactory? _factory;
   final String? _overridePath;
-
   Database? _db;
 
   /// Instance database yang sudah terbuka. Panggil [open] lebih dulu.

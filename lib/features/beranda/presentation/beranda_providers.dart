@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/format/tanggal.dart';
@@ -42,7 +41,7 @@ final todayReportProvider = FutureProvider<TodayReport>((ref) async {
 
 /// Nama toko dari pengaturan (default 'POSWAROENG').
 final storeNameProvider = Provider<String>((ref) {
-  final settings = ref.watch(settingsProvider).valueOrNull ?? const {};
+  final settings = ref.watch(settingsProvider).value ?? const {};
   final name = settings['store_name'];
   return (name == null || name.isEmpty) ? 'POSWAROENG' : name;
 });

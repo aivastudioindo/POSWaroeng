@@ -42,7 +42,7 @@ class ProdukListScreen extends ConsumerWidget {
                 prefixIcon: Icon(Icons.search),
               ),
               onChanged: (v) =>
-                  ref.read(productSearchProvider.notifier).state = v,
+                  ref.read(productSearchProvider.notifier).update(v),
             ),
           ),
           Expanded(
